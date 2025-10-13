@@ -1,0 +1,39 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Active Listings</h2>
+    {% for listing in listings %}
+    <ul style="list-style: none; padding: 0;">
+        <li style="margin-bottom: 2rem;">
+            <figure style="border: 1px solid #ddd; padding: 1rem; border-radius: 5px;">
+                <figcaption>
+                    <h3><a href="/listing/{{listing.name}}">{{ listing.name }}</a></h3>
+                </figcaption>
+
+                <!-- Price/Bid Display -->
+                <figcaption>
+                    {% if listing.highest_bid %}
+                        <strong>Current Bid:</strong> ${{ listing.highest_bid|floatformat:2 }}
+                    {% else %}
+                        <strong>Starting Price:</strong> ${{ listing.price|floatformat:2 }}
+                    {% endif %}
+                </figcaption>
+
+                {% if listing.image %}
+                <a href="/listing/{{listing.name}}">
+                    <img src="{{ listing.image }}"
+                         style="max-width: 200px; height: auto; border: 1px solid #eee;"
+                         alt="{{ listing.name }}">
+                </a>
+                {% endif %}
+
+                <figcaption style="margin-top: 0.5rem;">
+                    {{ listing.description|truncatechars:100 }}
+                </figcaption>
+            </figure>
+        </li>
+    </ul>
+    {% empty %}
+    <p>No active listings found.</p>
+    {% endfor %}
+{% endblock %}

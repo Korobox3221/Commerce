@@ -1,0 +1,142 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+<h1 style = 'text-align : center;'>{{title}}</h2>
+    {% if listing.category %}
+        <h5 style = 'text-align : center'>    Category:   {{listing.category}} </h5>
+    {% endif %}
+<div style = 'text-align : center' >
+    <figure >
+        <figcaption style = 'font-size: 20px; margin-bottom: 15px' > Starting price: ${{listing.price}} </figcaption>
+        {% if listing.image %}
+            <img  src = {{listing.image}} width="600" height="450">
+        {% endif %}
+        <figcaption style = 'margin-top: 20px; font-size: 20px'>  {{listing.description}} </figcaption>
+        <figcaption style = 'margin-top: 20px; font-size: 20px'> Owner: {{listing.owner}} </figcaption>
+    </figure>
+    {% if listing.isActive == False %}
+    <figure style = 'background-image: url(https://t3.ftcdn.net/jpg/05/55/02/68/360_F_555026815_MPCRt5oPL7ku5JeYgWaTCFv51kxXcSrc.jpg)'>
+        <figcaption><h1>Auction closed!</h1></figcaption>
+        <figcaption><h1>The winner is <span style = 'color: #fcad03'>{{winner.bider_Name}}</span> with the highest bid: <span style = 'color: #0b9e28'>${{winner.bid}}</span></h1></figcaption>
+    </figure>
+    {% else %}
+        <form method = "POST">
+            {% csrf_token %}
+            {% if winner.bid %}
+            <h4> Highest bid: ${{winner.bid}}</h4>
+            {% endif %}
+            <input type="hidden" name="action" value="bid">
+            <input  name = 'bid'  type = "number"  placeholder = "Place a bid" required  style = " color = 'white'  display: flex;
+            z-index: 3;
+            position: relative;
+            min-height: 44px;
+            border: 1px solid transparent;
+            background: #92eb34;
+            box-shadow: none;
+            border-radius: 24px;
+            margin: 0 auto;
+            width: 400px;
+            margin-top: 20px;
+            font-family: Arial, sans-serif;
+            font-size: 17px;
+            text-align: center"> <button name = 'bid_button' type="submit" style = " background-color: #92eb34;
+            border: 1px solid #303134;
+            border-radius: 4px;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            margin: 11px 4px;
+            padding: 0 16px;
+            line-height: 27px;
+            height: 36px;
+            min-width: 100px;
+            text-align: center;
+            cursor: pointer;
+            user-select: none;">Submit</button>
+        </form>
+        <form method = 'post'>
+            {% csrf_token %}
+            {% if user == listing.owner %}
+            <input type="hidden" name="action" value="close_auction">
+            <button  name = 'watchlit_button' type="submit" style = " background-color:#fc0303;
+            border: 1px solid #303134;
+            border-radius: 4px;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            padding: 0 16px;
+            line-height: 27px;
+            margin: 11px 4px;
+            height: 36px;
+            min-width: 100px;
+            text-align: center;
+            cursor: pointer;
+            margin-left:400px;
+            user-select: none;
+            ">Close auction</button>
+            {% endif %}
+        </form>
+        <form method = 'post'>
+            {% csrf_token %}
+            <input type="hidden" name="action" value="watchlist">
+            <button  name = 'watchlit_button' type="submit" style = " background-color:#24f2d3;
+            border: 1px solid #303134;
+            border-radius: 4px;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            margin: 11px 4px;
+            padding: 0 16px;
+            line-height: 27px;
+            height: 36px;
+            min-width: 100px;
+            text-align: center;
+            cursor: pointer;
+            margin-left:400px;
+            user-select: none;">
+            {% if  is_in_watchlist %}
+                ★ Remove from Watchlist
+            {% else %}
+                ☆ Add to Watchlist
+            {% endif %}
+            </button>
+        </form>
+    {% endif %}
+        <h3 style = 'margin-right:800px'>{{count}} comments</h1>
+        <form method = 'post'>
+            {% csrf_token %}
+            <input type="hidden" name="action" value="comment">
+            <textarea maxlength ="1000" id="contentid" name="comments" placeholder = "Leave a comment: " required  style = "width: 45%;
+            height: 250px;
+            padding: 12px 20px;
+            box-sizing: border-box;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            background: #24f2d3;
+            font-size: 16px;
+            resize: none;"></textarea>
+
+            <button  name = 'comment_button' type="submit" style = " background-color:#24f2d3;
+            border: 1px solid #303134;
+            border-radius: 4px;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            margin: 11px 4px;
+            padding: 0 16px;
+            line-height: 27px;
+            height: 36px;
+            min-width: 100px;
+            text-align: center;
+            cursor: pointer;
+            user-select: none;">Submit</button>
+        </form>
+</div>
+        {% for comment in comments %}
+        <div style = 'background-color: gray;'>
+
+
+            <figure>
+                    <figcaption style = 'font-size: 35px; margin-bottom: 15px;' ><span style = 'background-color: #fcad03;'>{{comment.commenter}}</span></figcaption>
+                    <figcaption style = 'margin-top: 25px; font-size: 25px;  margin-bottom: 15px; font-family: Arial, sans-serif;' ><span style = 'background-color: #fcad03;'>{{comment.comment}}</span> </figcaption>
+            </figure>
+        </div>
+        {% endfor %}
+
+{% endblock %}

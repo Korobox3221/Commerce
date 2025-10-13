@@ -1,0 +1,93 @@
+{% extends "auctions/layout.html" %}
+{% block body %}
+<h2>Create listing</h2>
+  <form method = "POST" action="{%url 'create_listing' %}">
+    {% csrf_token %}
+    <div>
+        <input name = 'name' autocomplete = 'off'  type = "text" placeholder = "Enter listing title:" required style = " color = 'white'  display: flex;
+      z-index: 3;
+      position: relative;
+      min-height: 44px;
+      border: 1px solid transparent;
+      background: #24f2d3;
+      box-shadow: none;
+      border-radius: 24px;
+      margin: 0 auto;
+      width: 700px;
+      margin-top: 30px;
+      font-family: Arial, sans-serif;
+      font-size: 17px;
+      text-align: center">
+    </div>
+    <br>
+    <textarea id="contentid" name="description" placeholder = "Write a description:" required  style = "width: 100%;
+  height: 250px;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  background: #24f2d3;
+  font-size: 16px;
+  resize: none;"></textarea>
+    <br>
+     <div>
+        <input name = 'price'  type = "number" min = "10" placeholder = "Choose the starting bid" required style = " color = 'white'  display: flex;
+      z-index: 3;
+      position: relative;
+      min-height: 44px;
+      border: 1px solid transparent;
+      background: #92eb34;
+      box-shadow: none;
+      border-radius: 24px;
+      margin: 0 auto;
+      width: 550px;
+      margin-top: 30px;
+      font-family: Arial, sans-serif;
+      font-size: 17px;
+      text-align: center"> <input name = 'category' autocomplete = 'off'  type = "text" placeholder = "(optional) Add category:"  style = " color = 'white'  display: flex;
+      z-index: 3;
+      position: relative;
+      min-height: 44px;
+      border: 1px solid transparent;
+      background: #ebb134;
+      box-shadow: none;
+      border-radius: 24px;
+      margin: 0 auto;
+      width: 550px;
+      margin-top: 30px;
+      font-family: Arial, sans-serif;
+      font-size: 17px;
+      text-align: center"> <input name = 'image' autocomplete = 'off' type = "text" placeholder = "(optional) Add image URL:" style = " color = 'white'  display: flex;
+      z-index: 3;
+      position: relative;
+      min-height: 44px;
+      border: 1px solid transparent;
+      background: #ebb134;
+      box-shadow: none;
+      border-radius: 24px;
+      margin: 0 auto;
+      width: 550px;
+      margin-top: 30px;
+      font-family: Arial, sans-serif;
+      font-size: 17px;
+      text-align: center">
+    </div>
+    </div>
+    </div>
+    <br>
+    <input type="submit" value="Submit" style = " background-color: #24f2d3;
+  border: 1px solid #303134;
+  border-radius: 4px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  margin: 11px 4px;
+  padding: 0 16px;
+  line-height: 27px;
+  height: 36px;
+  min-width: 100px;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;">
+
+</form>
+{% endblock %})
